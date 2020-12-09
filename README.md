@@ -17,7 +17,7 @@ AireLibre es un conjunto de proyectos e iniciativas, algunas como:
 * Linka Firmware: Firmware de arduino
 * LinkaBot: el twitter bot(?) en algun futuro
 * Koa Nde Aire?: Otro bot(?)
-* AQmap: Mapa web en Go
+* [AQmap: Mapa web en Go](https://github.com/matiasinsaurralde/aqmap)
 
 ## FAQ
 
