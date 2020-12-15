@@ -14,7 +14,7 @@ AireLibre es un conjunto de proyectos e iniciativas, algunas como:
 
 * Red Descentralizada de Aire Libre(**ReDAL**): La red de sensores de calidad de aire.
 * Linka: El Backend y API que recibe las mediciones de los sensores
-* Linka Firmware: Firmware de arduino
+* [Linka Firmware](https://github.com/garyservin/linka-firmware/): Firmware de arduino
 * LinkaBot: el twitter bot(?) en algun futuro
 * Koa Nde Aire?: Otro bot(?)
 * [AQmap: Mapa web en Go](https://github.com/matiasinsaurralde/aqmap)
