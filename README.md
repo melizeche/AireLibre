@@ -23,7 +23,7 @@ AireLibre es un conjunto de proyectos e iniciativas, algunas como:
 
 ### Existen otras iniciativas similares?
 
-Si, pero no están abiertas a la colaboración de la comunidad.
+Si, pero no están abiertas a la colaboración de la comunidad ni son de código abierto.
 
 ### Puedo sumarme a la red?
 
