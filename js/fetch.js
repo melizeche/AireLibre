@@ -1,9 +1,10 @@
-var GEO_URL = "https://rald-dev.greenbeep.com/api/v1/aqi";
+const ENDPOINT_AQI = "https://rald-dev.greenbeep.com/api/v1/aqi";
+const DEFAULT_CENTER = [-25.250, -57.536]
+const DEFAULT_ZOOM = 11
 
 function requestGeoData() {
-    //this.loadingIndicator.show();
     var map = this.map;
-    var searchUrl = GEO_URL;
+    var searchUrl = ENDPOINT_AQI;
 
 
     fetch(searchUrl)

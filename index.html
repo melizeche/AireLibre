@@ -1,48 +1,53 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>AireLibre</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-    crossorigin=""/>
+        integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+        crossorigin="" />
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-    crossorigin=""></script>
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin=""></script>
     <script src="./js/fetch.js"></script>
     <style>
-       #mapid { height: 500px; }
+        #mapid {
+            height: 500px;
+        }
     </style>
-    
+
 </head>
+
 <body>
-  <section class="section">
-    <div class="container">
-      <h1 class="title">
-        AireLibre
-      </h1>
-      <p class="subtitle">
-        Red Descentralizada de Aire<strong>Libre</strong>!
-      </p>
-    </div>
-  </section>
-  <section>
-    <div id="mapid"></div>
-    <div>
-        <!-- <iframe src="https://matias.insaurral.de/aqmap/"></iframe> -->
-    </div>
-</section>
+    <section class="section">
+        <div class="container">
+            <h1 class="title">
+                AireLibre
+            </h1>
+            <p class="subtitle">
+                Red Descentralizada de Aire<strong>Libre</strong>!
+            </p>
+        </div>
+    </section>
+    <section>
+        <div id="mapid"></div>
+        <div>
+            <!-- <iframe src="https://matias.insaurral.de/aqmap/"></iframe> -->
+        </div>
+    </section>
 
-  <script>
-      var map = L.map('mapid').setView([-25.25, -57.536], 11);
+    <script>
+        var map = L.map('mapid').setView(DEFAULT_CENTER, DEFAULT_ZOOM);
 
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(map);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
 
-requestGeoData();
-  </script>
-  </body>
+        requestGeoData();
+    </script>
+</body>
+
 </html>
