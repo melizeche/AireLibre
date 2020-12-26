@@ -13,17 +13,17 @@ En resumen es responder a: Quiero salir a trotar ¿Puedo ahora o me va a hacer m
 AireLibre es un conjunto de proyectos e iniciativas, algunas como:
 
 * Red Descentralizada de Aire Libre(**ReDAL**): La red de sensores de calidad de aire.
-* Linka: El Backend y API que recibe las mediciones de los sensores
-* Linka Firmware: Firmware de arduino
+* [Linka: El Backend y API que recibe las mediciones de los sensores](https://github.com/tchx84/linka)
+* [Linka Firmware](https://github.com/garyservin/linka-firmware/): Firmware de arduino
 * LinkaBot: el twitter bot(?) en algun futuro
 * Koa Nde Aire?: Otro bot(?)
-* AQmap: Mapa web en Go
+* [AQmap: Mapa web en Go](https://github.com/matiasinsaurralde/aqmap)
 
 ## FAQ
 
 ### Existen otras iniciativas similares?
 
-Si, pero no están abiertas a la colaboración de la comunidad.
+Si, pero no están abiertas a la colaboración de la comunidad ni son de código abierto.
 
 ### Puedo sumarme a la red?
 
@@ -35,7 +35,22 @@ Basicamente un sensor que se comunique con Linka, nuestro backend.
 
 ### Quiero construir un sensor, que necesito?
 
- TBD --- Acá la lista de elementos o link a tutorial de como armar un sensor ---
+#### Materiales necesarios:
+* Sensor de calidad del aire Plantpower PMS7003 (asegurarse de que venga con la placa adaptadora) [Aliexpress](https://www.aliexpress.com/item/32784279004.html) [Ebay](https://www.ebay.com/itm/High-Precision-Laser-Dust-Sensor-Module-PM2-5-PM10-for-PMS7003-Cable-for-Arduino/303452433279) [Amazon](https://www.amazon.com/DSLE-Digital-PLANTOWER-PMS7003-Adapter/dp/B08M2F4B9R)
+* Placa ESP8266, nosotros usamos la Wemos D1 mini [Aliexpress](https://www.aliexpress.com/item/32787418018.html) [Ebay](https://www.ebay.com/itm/D1-Mini-NodeMcu-4M-bytes-Lua-WIFI-Development-Board-ESP8266-by-WeMos/224207727199)
+* Caja plástica exterior 100x100mm [Luminotecnia](https://www.luminotecnia.com.py/producto/1265/Caja-Exterior-Plastica-de-Conexion-100x100)
+* Prensacables (opcional) [Luminotecnia](https://www.luminotecnia.com.py/producto/2612/Prensacable-PG-11)
+* Cable micro USB
+* Cargador USB
+
+#### Herramientas necesarias
+* Soldador 40W
+* Estaño
+* Pinzas para corte
+* Destornilladores
+
+#### Guía de armado
+TBA
 
 ### Por que tantos proyectos diferentes?
 
