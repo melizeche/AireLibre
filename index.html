@@ -1,58 +1,135 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AireLibre</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aire Libre</title>
+  <link rel="stylesheet" href="./style/normalize.css">
+  <link rel="stylesheet" href="./style/master.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
         integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-        crossorigin="" />
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-        crossorigin=""></script>
-    <script src="./js/fetch.js"></script>
-    <style>
-        #mapid {
-            height: 450px;
-        }
-    </style>
-
+        crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+          integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+          crossorigin=""></script>
+  <script src="./js/fetch.js"></script>
 </head>
-
 <body>
-    <section class="section">
-        <div class="container">
-            <h1 class="title">
-                AireLibre
-            </h1>
-            <p class="subtitle">
-                Red Descentralizada de Aire<strong>Libre</strong>!
-            </p>
-        </div>
-    </section>
-    <section class="section">
-        <div class="container">
-            <div id="mapid"></div>
-        </div>
-    </section>
-    <section class="section">
-        <div class="container">
-            <p>Más info en <a href="https://github.com/melizeche/AireLibre">https://github.com/melizeche/AireLibre</a>
-            </p>
-        </div>
-    </section>
+<div class="wrapper">
+  <header class="head">
+    <h1 class="anchor anchor__for-desktop">
+      <a href="/">Aire|Libre</a>
+    </h1>
+    <h1 class="anchor anchor__for-mobile">
+      <a href="/">A|L</a>
+    </h1>
+  </header>
+  <main class="container current-reading current-reading--is-good">
+    <div class="reading">
+      <!-- <h2 alt="Libre" class="reading__text reading__text--regular">No tan bien</h2> -->
+      <!-- <h2 alt="Libre" class="reading__text reading__text--large reading__text--break-2">Maso</h2> -->
+      <h2 alt="Libre" class="reading__text reading__text--large">Libre</h2>
+      <a class="reading-help" href="#scale" title="Saber más"><img src="./ico/question.svg" alt="Saber más"></a>
+    </div>
 
-    <script>
-        var map = L.map('mapid').setView(DEFAULT_CENTER, DEFAULT_ZOOM);
+    <h3 class="reading-index">AQI <b>178</b></h3>
+    <p class="reading-desc">Sin restricciones para actividades al aire libre</p>
+    <h4 class="reading-sensor">Fernando de la mora <a href="#map">Dónde?</a></h4>
+    <small class="reading-lu">Actualizado hace 5 minutos</small>
+  </main>
+  <section class="container actions">
+    <select name="sensors" id="sensor" class="btn btn--drop">
+      <option value="0" selected>Más Sensores</option>
+      <option value="1">Luque</option>
+      <option value="2">Trinidad</option>
+    </select>
+    <button class="btn"><img src="./ico/location-pin.svg" alt="Pin de ubicación"> Dar mi ubicación</button>
+  </section>
+  <section class="container info">
+    <h2 class="info__title">Qué es AQI?</h2>
+    <p class="info__desc">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptas quos, tenetur deleniti
+      minima laborum vero ipsa aliquid, eaque porro praesentium corporis est soluta repellendus! Obcaecati recusandae
+      explicabo maxime accusantium modi.</p>
+  </section>
+  <section id="scale" class="container info">
+    <h2 class="info__title">La escala</h2>
+    <ul class="readings">
+      <li class="reading-info reading-info--is-good">
+        <h3 class="reading-info__title">Libre</h3>
+        <h4 class="reading-info__index">AQI <b>0-50</b></h4>
+        <p class="reading-info__desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur quisquam
+          voluptate molestias, consequuntur</p>
+      </li>
+      <li class="reading-info reading-info--is-moderate">
+        <h3 class="reading-info__title">Maso</h3>
+        <h4 class="reading-info__index">AQI <b>51-100</b></h4>
+        <p class="reading-info__desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur quisquam
+          voluptate molestias, consequuntur</p>
+      </li>
+      <li class="reading-info reading-info--is-sensitive">
+        <h3 class="reading-info__title">No tan bien</h3>
+        <h4 class="reading-info__index">AQI <b>101-150</b></h4>
+        <p class="reading-info__desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur quisquam
+          voluptate molestias, consequuntur</p>
+      </li>
+      <li class="reading-info reading-info--is-unhealthy">
+        <h3 class="reading-info__title">Insalubre</h3>
+        <h4 class="reading-info__index">AQI <b>151-200</b></h4>
+        <p class="reading-info__desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur quisquam
+          voluptate molestias, consequuntur</p>
+      </li>
+      <li class="reading-info reading-info--is-very-unhealthy">
+        <h3 class="reading-info__title">Muy Insalubre</h3>
+        <h4 class="reading-info__index">AQI <b>201-300</b></h4>
+        <p class="reading-info__desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur quisquam
+          voluptate molestias, consequuntur</p>
+      </li>
+      <li class="reading-info reading-info--is-dangerous">
+        <h3 class="reading-info__title">Peligroso</h3>
+        <h4 class="reading-info__index">AQI <b>300+</b></h4>
+        <p class="reading-info__desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Pariatur quisquam
+          voluptate molestias, consequuntur</p>
+      </li>
+    </ul>
+  </section>
+  <section class="container info">
+    <h2 class="info__title">Red abierta de sensores</h2>
+    <p class="info__desc">Lorem ipsum dolor sit amet consectetur adipisicing elit. Libero a eveniet harum praesentium.
+      Tempore magni rerum ea ex maxime, debitis inventore quia sint, modi asperiores, reprehenderit pariatur ipsam earum
+      ipsum.</p>
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
-
-        requestGeoData();
-    </script>
+    <div id="map" class="map" style="height: 400px;"></div>
+  </section>
+  <footer class="container">
+    <span>Aire libre es un proyecto libre, si querés saber más escribinos <a href="#">acá</a></span>
+  </footer>
+</div>
 </body>
+<script>
+  WebFontConfig = {
+    google: {families: ['Rubik:400,700,900:latin']}
+  };
+  (function () {
+    setTimeout(function () {
+      document.getElementsByTagName('body')[0].classList.add('beautiful');
+    }, 1000);
+    var wf = document.createElement('script');
+    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
+            '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
+    wf.type = 'text/javascript';
+    wf.async = 'true';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(wf, s);
+  })();
+</script>
+<script>
+  var map = L.map('map').setView(DEFAULT_CENTER, DEFAULT_ZOOM);
 
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+  }).addTo(map);
+
+  requestGeoData();
+</script>
 </html>
