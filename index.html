@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +10,15 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
         integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
         crossorigin=""/>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0EQ0STJ1E5"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+    gtag('config', 'G-0EQ0STJ1E5');
+  </script>
   <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
           integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
           crossorigin=""></script>
@@ -27,7 +36,8 @@
   </header>
   <section class="container info">
     <h2 class="info__title">Qué es AQI?</h2>
-    <p class="info__desc">Es un índice utilizado por agencias ambientales para medir la calidad del aire, cuanto más alto su valor, el nivel de contaminación es mayor.</p>
+    <p class="info__desc">Es un índice utilizado por agencias ambientales para medir la calidad del aire, cuanto más
+      alto su valor, el nivel de contaminación es mayor.</p>
   </section>
   <section id="scale" class="container info">
     <h2 class="info__title">La escala</h2>
@@ -40,7 +50,8 @@
       <li class="reading-info reading-info--is-moderate">
         <h3 class="reading-info__title">Maso</h3>
         <h4 class="reading-info__index">AQI <b>51-100</b></h4>
-        <p class="reading-info__desc">Calidad de aire aceptable, riesgo moderado para la salud de personas sensibles a la contaminación ambiental.</p>
+        <p class="reading-info__desc">Calidad de aire aceptable, riesgo moderado para la salud de personas sensibles a
+          la contaminación ambiental.</p>
       </li>
       <li class="reading-info reading-info--is-sensitive">
         <h3 class="reading-info__title">No tan bien</h3>
@@ -67,12 +78,14 @@
   </section>
   <section class="container info">
     <h2 class="info__title">Red abierta de sensores</h2>
-    <p class="info__desc">AireLibre es una respuesta de la comunidad a la necesidad de saber sobre la calidad del aire de manera libre, colaborativa y descentralizada.</p>
+    <p class="info__desc">AireLibre es una respuesta de la comunidad a la necesidad de saber sobre la calidad del aire
+      de manera libre, colaborativa y descentralizada.</p>
 
     <div id="map" class="map" style="height: 400px;"></div>
   </section>
   <footer class="container">
-    <span>Aire libre es un proyecto libre y de código abierto, si querés saber más escribinos <a href="https://github.com/melizeche/AireLibre">acá</a></span>
+    <span>Aire libre es un proyecto libre y de código abierto, si querés saber más escribinos <a
+              href="https://github.com/melizeche/AireLibre">acá</a></span>
   </footer>
 </div>
 </body>
