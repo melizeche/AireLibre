@@ -12,9 +12,13 @@ const CAT_LABEL_STYLE = {
 }
 
 function requestGeoData() {
+    const minutesToSubtract = 30;
+    const currentDate = new Date();
+    const time = new Date(currentDate.getTime() - minutesToSubtract * 60000);
+    const utcDate = time.toISOString();
     const map = this.map;
-    const searchUrl = ENDPOINT_AQI;
-
+    const searchUrl = ENDPOINT_AQI + '?start=' + utcDate;
+    
     fetch(searchUrl)
         .then(response => response.json())
         .then(data => {
