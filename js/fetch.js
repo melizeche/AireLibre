@@ -1,4 +1,5 @@
 const ENDPOINT_AQI = "https://rald-dev.greenbeep.com/api/v1/aqi";
+const ENDPOINT_STATS = "https://rald-dev.greenbeep.com/api/v1/stats";
 const DEFAULT_CENTER = [-25.250, -57.536]
 const DEFAULT_ZOOM = 11
 
@@ -41,12 +42,40 @@ const loadMarkers = (map, data) => L.geoJSON(data, {
     onEachFeature: (feature, layer) => {
         const { class: className, label } = CAT_LABEL_STYLE[feature.properties.quality.category];
         const popup = `<h1>${feature.properties.description}</h1><span class="has-text-weight-bold">AQI: ${feature.properties.quality.index}</span><br>${label}`;
+        
+        async function serverData(){
+            const minutesToSubtract = 30;
+            const currentDate = new Date();
+            const time = new Date(currentDate.getTime() - minutesToSubtract * 60000);
+            const utcDate = time.toISOString();
+            const statsUrl = ENDPOINT_STATS + '?start=' + utcDate + '&source=' + feature.properties.sensor;
+            var response = await fetch(statsUrl);
+            if (response.ok) {
+                var response = await response.json();
+                const avg = (response[0]["average"]);
+                const max = (response[0]["maximum"]);
+                const min = (response[0]["minimum"]);
+                const stat = `</span><br></h1><span class="has-text-weight-bold">Avg: ${avg}</span><br></h1><span class="has-text-weight-bold">Max: ${max}
+                            </span><br></h1><span class="has-text-weight-bold">Min: ${min}`;
+                layer.bindTooltip(popup + `${stat}`);
+                 
+            } else {
+                throw new Error(response.statusText);
+            }
+        }
+ 
+
+       function populateToolTip(layer){
+            serverData();
+            return popup;
+        } 
+
         layer
             .bindPopup(popup, { autoClose: false, className })
-            .bindTooltip(`<h1>${feature.properties.description}</h1>${label}`, {
+            .bindTooltip(populateToolTip, {
                 noHide: true,
-                // permanent: true, 
-                className,
+                //permanent: true, 
+                className, 
             });
 
     }, // onEachFeature ...
