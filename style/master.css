@@ -73,7 +73,8 @@
 }
 
 .wrapper a {
-	color: inherit
+	color: darkblue;
+	text-decoration: underline;
 }
 
 .container {
@@ -327,6 +328,14 @@
 
 .info__title {
 	font-size: 30px;
+	line-height: 1.4;
+	margin-top: 0;
+	margin-bottom: 10px;
+	font-weight: 700
+}
+
+.info__subtitle {
+	font-size: 20px;
 	line-height: 1.4;
 	margin-top: 0;
 	margin-bottom: 10px;
