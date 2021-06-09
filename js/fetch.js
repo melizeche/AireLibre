@@ -71,7 +71,6 @@ const loadMarkers = (map, data) => L.geoJSON(data, {
         } 
 
         layer
-            .bindPopup(popup, { autoClose: false, className })
             .bindTooltip(populateToolTip, {
                 noHide: true,
                 //permanent: true, 
