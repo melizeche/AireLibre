@@ -36,9 +36,7 @@ function requestGeoData() {
 const loadMarkers = (map, data) => L.geoJSON(data, {
     onEachFeature: (feature, layer) => {
         const { class: className, label } = CAT_LABEL_STYLE[feature.properties.quality.category];
-        const popup = `<h1>${feature.properties.description}</h1><span class="has-text-weight-bold">AQI: ${feature.properties.quality.index}</span><br>${label}`;
         layer
-            .bindPopup(popup, { autoClose: false, className })
             .bindTooltip(`<h1>${feature.properties.description}</h1>${label}`, {
                 noHide: true,
                 // permanent: true, 
