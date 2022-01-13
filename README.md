@@ -4,7 +4,7 @@
 
 AireLibre es una respuesta de la comunidad a la necesidad de saber sobre la calidad del aire de manera libre, colaborativa y descentralizada.
 
-## Razon de ser
+## Razón de ser
 
 En resumen es responder a: Quiero salir a trotar ¿Puedo ahora o me va a hacer mal?
 
@@ -20,19 +20,19 @@ AireLibre es un conjunto de proyectos e iniciativas, algunas como:
 
 ## FAQ
 
-### Existen otras iniciativas similares?
+### ¿Existen otras iniciativas similares?
 
 Si, pero no están abiertas a la colaboración de la comunidad ni son de código abierto.
 
-### Puedo sumarme a la red?
+### ¿Puedo sumarme a la red?
 
 Claro, sin problemas!
 
-### Quiero sumarme a la red, que necesito?
+### Quiero sumarme a la red, ¿qué necesito?
 
-Basicamente un sensor que se comunique con Linka, nuestro backend.
+Básicamente un sensor que se comunique con Linka, nuestro backend.
 
-### Quiero construir un sensor, que necesito?
+### Quiero construir un sensor, ¿qué necesito?
 
 #### Materiales necesarios:
 * Sensor de calidad del aire Plantpower PMS7003 (asegurarse de que venga con la placa adaptadora) [Aliexpress](https://www.aliexpress.com/item/32784279004.html) [Ebay](https://www.ebay.com/itm/High-Precision-Laser-Dust-Sensor-Module-PM2-5-PM10-for-PMS7003-Cable-for-Arduino/303452433279) [Amazon](https://www.amazon.com/DSLE-Digital-PLANTOWER-PMS7003-Adapter/dp/B08M2F4B9R)
@@ -51,29 +51,29 @@ Basicamente un sensor que se comunique con Linka, nuestro backend.
 #### Guía de armado
 TBA
 
-### Por que tantos proyectos diferentes?
+### ¿Por qué tantos proyectos diferentes?
 
 Es una iniciativa descentralizada y medio va por ese lado.
 
-### Puedo extender/sumar proyectos a AireLibre?
+### ¿Puedo extender/sumar proyectos a AireLibre?
 
 Claro, es una iniciativa comunitaria, si querés crear alguna solución, frontend, bot o lo que se te ocurra podés hacerlo, avisanos y lo agregamos al readme.
 
-### Puedo crear mi propia red?
+### ¿Puedo crear mi propia red?
 
 Claro, la licencia te permite, si por alguna razón sumarte a la Red Descentralizada de AireLibre no soluciona tus necesidades podes clonar los repositorios adaptarlos a tu necesidad.
 
-### Es de uso profesional/industrial/científico/militar?
+### ¿Es de uso profesional/industrial/científico/militar?
 
 No.
 
-### Los sensores son calibrados en Suiza?
+### ¿Los sensores son calibrados en Suiza?
 
 No, en Luque.
 
-### Por qué Linka?
+### ¿Por qué Linka?
 
-Nunca viste Capitán Planeta? Linka era la planetaria del viento
+¿Nunca viste Capitán Planeta? Linka era la planetaria del viento.
 ![](https://captainplanetfoundation.org/wp-content/uploads/Linka-1.png)
 
 ## Licencia
