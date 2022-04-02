@@ -25,7 +25,7 @@ function requestGeoData() {
             console.log(data)
             loadMarkers(map, {
                 type: "FeatureCollection",
-                features: data.map(e => ({
+                features: data.filter(e => e.quality !== null).map(e => ({
                     "type": "Feature",
                     "geometry": {
                         "type": "Point",
