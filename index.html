@@ -239,6 +239,13 @@
   }).addTo(map);
 
   requestGeoData();
+
+  if (window.navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+      var pos = [position.coords.latitude, position.coords.longitude];
+      map.setView(pos, DEFAULT_ZOOM);
+    })
+  }
 </script>
 
 </html>
