@@ -12,7 +12,7 @@ const CAT_LABEL_STYLE = {
 }
 
 function requestGeoData() {
-    const minutesToSubtract = 60;
+    const minutesToSubtract = 120;
     const currentDate = new Date();
     const time = new Date(currentDate.getTime() - minutesToSubtract * 60000);
     const utcDate = time.toISOString();
