@@ -147,26 +147,33 @@
     <section class="container">
       <header class="head">
         <h1 class="anchor anchor__for-desktop">
-          <a href="/">Aire|Libre</a>
+          <a class="tvTitleMap colorTheme" href="/">Aire|Libre</a>
         </h1>
         <h1 class="anchor anchor__for-mobile">
-          <a href="/">A|L</a>
+          <a class="tvTitleMap colorTheme" href="/">A|L</a>
         </h1>
+        <div class="onoffswitch">
+          <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" onchange="changeSwitch()" checked>
+          <label class="onoffswitch-label" for="myonoffswitch">
+          <div class="onoffswitch-inner"></div>
+          <div class="onoffswitch-switch"></div>
+          </label>
+          </div>
       </header>
       <div id="map" class="map"></div>
     </section>
     <section class="info">
       <section>
-        <h2 class="info__title">¿Qué es AireLibre?</h2>
+        <h2 class="info__title colorTheme">¿Qué es AireLibre?</h2>
 
-        <p class="info__desc">AireLibre es una respuesta de la comunidad a la necesidad de saber sobre la calidad del aire de manera libre, colaborativa y descentralizada.</p>
-        <h2 class="info__title">Qué es AQI?</h2>
-        <p class="info__desc">Es un índice utilizado por agencias ambientales para medir la calidad del aire, cuanto más
+        <p class="info__desc colorTheme">AireLibre es una respuesta de la comunidad a la necesidad de saber sobre la calidad del aire de manera libre, colaborativa y descentralizada.</p>
+        <h2 class="info__title colorTheme">Qué es AQI?</h2>
+        <p class="info__desc colorTheme">Es un índice utilizado por agencias ambientales para medir la calidad del aire, cuanto más
           alto su valor, el nivel de contaminación es mayor.</p>
       </section>
 
       <section id="scale">
-        <span class="info__title">Escala AQI</span>
+        <span class="info__title colorTheme">Escala AQI</span>
         <div class="reading-info reading-info--is-good">
           <span class="reading-info__title">0-50 | Libre</span>
           <p class="reading-info__desc">Escaso riesgo de contaminación atmosférica, calidad de aire satisfactoria.</p>
@@ -197,19 +204,19 @@
           <span class="reading-info__title">300+ | Peligroso</span>
           <p class="reading-info__desc">Alerta sanitaria, efectos graves para toda la población.</p>
         </div>
-        <p>Fuente de la escala: <a href="https://www.airnow.gov/aqi/aqi-basics-in-spanish/">AirNow</a></p>
+        <p class="colorTheme">Fuente de la escala: <a class="link" href="https://www.airnow.gov/aqi/aqi-basics-in-spanish/">AirNow</a></p>
       </section>
       <div class="separator"></div>
       <section>
-        <h3 class="info__subtitle">¿Querés saber más sobre el proyecto?</h3>
-        <p class="content">Si querés colaborar, o aprender a <b>construir tu propio sensor</b>, o saber en que se diferencia con otros proyectos similares o 
-            <a class="color:inherit;" href="https://github.com/melizeche/AireLibre/#los-sensores-son-calibrados-en-suiza">donde se calibran nuestos sensores</a>? Entrá <a href="https://github.com/melizeche/AireLibre/#faq">acá para más info.</a></p>
+        <h3 class="info__subtitle colorTheme">¿Querés saber más sobre el proyecto?</h3>
+        <p class="content colorTheme">Si querés colaborar, o aprender a <b>construir tu propio sensor</b>, o saber en que se diferencia con otros proyectos similares o 
+            <a class="color:inherit; link" href="https://github.com/melizeche/AireLibre/#los-sensores-son-calibrados-en-suiza">donde se calibran nuestos sensores</a>? Entrá <a class="link" href="https://github.com/melizeche/AireLibre/#faq">acá para más info.</a></p>
       </section>
       <div class="separator"></div>
 
       <footer class="content is-small">
-        <p class="is-small">AireLibre es un proyecto libre y de código abierto bajo licencia AGPLv3.<br>Sugerencias, bugs o lo que sea lo encontras en el <a
-            href="https://github.com/melizeche/AireLibre">repo</a></p>
+        <p class="is-small colorTheme">AireLibre es un proyecto libre y de código abierto bajo licencia AGPLv3.<br>Sugerencias, bugs o lo que sea lo encontras en el <a
+          class="link" href="https://github.com/melizeche/AireLibre">repo</a></p>
       </footer>
     </section>
   </div>
@@ -233,11 +240,29 @@
 </script>
 <script>
   var map = L.map('map').setView(DEFAULT_CENTER, DEFAULT_ZOOM);
-
+  let darkMode = {
+    isDarkTheme: false
+  };
+  
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
-
+  let flag =  JSON.parse(localStorage.getItem('darkTheme'));
+  if(flag.isDarkTheme == true){
+    document.getElementById("myonoffswitch").checked = false;
+    onDarkMode()
+  }else{
+    onLightMode()
+    document.getElementById("myonoffswitch").checked = true;
+  }
+  function changeSwitch() {
+    var checked = document.getElementById("myonoffswitch").checked;
+     if(!checked){
+      onDarkMode();
+    }else{
+      onLightMode();
+     }
+  }
   requestGeoData();
 
   if (window.navigator.geolocation) {
@@ -245,6 +270,37 @@
       var pos = [position.coords.latitude, position.coords.longitude];
       map.setView(pos, DEFAULT_ZOOM);
     })
+  }
+  function onDarkMode(){
+    document.getElementsByClassName('leaflet-pane leaflet-tile-pane')[0].style.cssText +=';filter: invert(1) hue-rotate(180deg) grayscale(0.7);';;
+    var bodyElement = document.body;
+    bodyElement.classList ="beautiful dark-mode";
+    var titlesElements = document.getElementsByClassName('colorTheme');
+    for(i=0;i<titlesElements.length;i++){
+      titlesElements[i].style.color = 'white';
+    }
+    darkMode.isDarkTheme = true;
+    localStorage.setItem('darkTheme', JSON.stringify(darkMode));
+    var linksText = document.getElementsByClassName('link');
+    for(i=0;i<linksText.length;i++){
+      linksText[i].style.color = '#8cb4ff';
+    }
+  }
+
+  function onLightMode(){
+    document.getElementsByClassName('leaflet-pane leaflet-tile-pane')[0].removeAttribute('style');
+    var bodyElement = document.body;
+    bodyElement.classList ="beautiful light-mode"
+    darkMode.isDarkTheme = false;
+    localStorage.setItem('darkTheme', JSON.stringify(darkMode));
+    var titlesElements = document.getElementsByClassName('colorTheme');
+    for(i=0;i<titlesElements.length;i++){
+      titlesElements[i].style.color = 'black';
+    }
+    var linksText = document.getElementsByClassName('link');
+    for(i=0;i<linksText.length;i++){
+      linksText[i].style.color = '#1a0dab';
+    }
   }
 </script>
 
