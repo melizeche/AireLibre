@@ -256,13 +256,13 @@
     let flag =  JSON.parse(localStorage.getItem('darkTheme')) || {isDarkTheme:false};
     if(flag && flag.isDarkTheme){
       document.getElementById("myonoffswitch").checked = false;
-      onDarkMode()
+      onDarkMode();
     }else{
-      onLightMode()
+      onLightMode();
       document.getElementById("myonoffswitch").checked = true;
     }
   }
-  getSaveTheme()
+  getSaveTheme();
 
   function changeSwitch() {
     var checked = document.getElementById("myonoffswitch").checked;

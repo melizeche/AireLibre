@@ -34,7 +34,6 @@ const getContributors = () => {
                  return 1;
                 return 0;
                });
-            console.log(listContributors)
             const div = document.querySelector(".contributorsContainer");
             div.innerHTML = listContributors.map(u => 
                 (`<div class="divContributor">
