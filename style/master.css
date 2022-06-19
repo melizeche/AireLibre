@@ -501,3 +501,28 @@
     .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
       right: 0px;
     }
+
+	#contributorsImg{
+		border-radius: 50%;
+		height: 70px;
+	}
+
+	.divContributor{
+		align-items: center;
+		text-align:center;
+
+	}
+
+	.contributorsContainer {
+		display: flex;
+		align-items:center;
+		padding: 1rem;
+		overflow-x: scroll;
+	}
+	
+	.contributorsContainer > div {
+		flex: none;
+		max-width: 100%;
+		padding-left: 15px;
+		padding-right: 15px;
+	}

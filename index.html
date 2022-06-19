@@ -140,6 +140,7 @@
     integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
     crossorigin=""></script>
   <script src="./js/fetch.js"></script>
+  <script src="./js/contributors.js"></script>
 </head>
 
 <body>
@@ -147,10 +148,10 @@
     <section class="container">
       <header class="head">
         <h1 class="anchor anchor__for-desktop">
-          <a class="tvTitleMap colorTheme" href="/">Aire|Libre</a>
+          <a class="colorTheme" href="/">Aire|Libre</a>
         </h1>
         <h1 class="anchor anchor__for-mobile">
-          <a class="tvTitleMap colorTheme" href="/">A|L</a>
+          <a class="colorTheme" href="/">A|L</a>
         </h1>
         <div class="onoffswitch">
           <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" onchange="changeSwitch()" checked>
@@ -213,7 +214,10 @@
             <a class="color:inherit; link" href="https://github.com/melizeche/AireLibre/#los-sensores-son-calibrados-en-suiza">donde se calibran nuestos sensores</a>? Entrá <a class="link" href="https://github.com/melizeche/AireLibre/#faq">acá para más info.</a></p>
       </section>
       <div class="separator"></div>
-
+      <section>
+        <h3 class="info__subtitle colorTheme">Contribuidores del proyecto</h3>
+        <div class="contributorsContainer"></div>
+      </section>
       <footer class="content is-small">
         <p class="is-small colorTheme">AireLibre es un proyecto libre y de código abierto bajo licencia AGPLv3.<br>Sugerencias, bugs o lo que sea lo encontras en el <a
           class="link" href="https://github.com/melizeche/AireLibre">repo</a></p>
@@ -247,14 +251,19 @@
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
-  let flag =  JSON.parse(localStorage.getItem('darkTheme')) || {isDarkTheme:false};
-  if(flag && flag.isDarkTheme){
-    document.getElementById("myonoffswitch").checked = false;
-    onDarkMode()
-  }else{
-    onLightMode()
-    document.getElementById("myonoffswitch").checked = true;
+  
+  function getSaveTheme(){
+    let flag =  JSON.parse(localStorage.getItem('darkTheme')) || {isDarkTheme:false};
+    if(flag && flag.isDarkTheme){
+      document.getElementById("myonoffswitch").checked = false;
+      onDarkMode()
+    }else{
+      onLightMode()
+      document.getElementById("myonoffswitch").checked = true;
+    }
   }
+  getSaveTheme()
+
   function changeSwitch() {
     var checked = document.getElementById("myonoffswitch").checked;
      if(!checked){
