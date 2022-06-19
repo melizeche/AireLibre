@@ -26,6 +26,14 @@ const getContributors = () => {
                 t.login === thing.login
                 ))
             );
+            listContributors = listContributors.sort(function(a, b){
+                var nameA = a.login.toLowerCase(), nameB = b.login.toLowerCase();
+                if (nameA < nameB)
+                 return -1;
+                if (nameA > nameB)
+                 return 1;
+                return 0;
+               });
             console.log(listContributors)
             const div = document.querySelector(".contributorsContainer");
             div.innerHTML = listContributors.map(u => 
