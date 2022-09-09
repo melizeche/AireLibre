@@ -49,6 +49,10 @@ const getContributors = () => {
 
             getSaveTheme();
         })
-        .catch((error) => console.error(error));
+        .catch((error) => {
+            console.error(error);
+            document.getElementById("title_contributors").style.display = "none";
+            document.getElementById("contributorsContainer").style.display = "none";
+        });
 };
 getContributors();
