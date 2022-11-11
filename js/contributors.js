@@ -6,8 +6,9 @@ const getContributors = () => {
         fetch(`https://api.github.com/repos/melizeche/linkaBot/contributors`),
         fetch(`https://api.github.com/repos/matiasinsaurralde/aqmap/contributors`),
         fetch(`https://api.github.com/repos/LucasGinard/AireLibre-Android/contributors`),
-      ])
-        .then(async([aireLibre, linka,linkaFirmware,linkBot,aqmap,appAndroid]) => {
+        fetch(`https://api.github.com/repos/LucasGinard/AireLibre-iOS/contributors`),
+    ])
+        .then(async([aireLibre, linka,linkaFirmware,linkBot,aqmap,appAndroid,appIOS]) => {
             let contributors = [];
             contributors.push(await aireLibre.json());
             contributors.push(await linka.json());
@@ -15,6 +16,7 @@ const getContributors = () => {
             contributors.push(await linkBot.json());
             contributors.push(await aqmap.json());
             contributors.push(await appAndroid.json());
+            contributors.push(await appIOS.json())
             let listContributors = [];
             contributors.forEach(element => {
                 element.forEach(auxElement =>{
