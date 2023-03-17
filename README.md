@@ -18,6 +18,7 @@ AireLibre es un conjunto de proyectos e iniciativas, algunas como:
 * [LinkaBot:](https://github.com/melizeche/linkaBot) el bot de twitter que postea cada 2 horas [@KoaNdeAire](https://twitter.com/KoaNdeAire)
 * [AQmap: Mapa web en Go](https://github.com/matiasinsaurralde/aqmap)
 * [App Android](https://github.com/LucasGinard/AireLibre-Android) Disponible en la -> [PlayStore](https://play.google.com/store/apps/details?id=com.lucasginard.airelibre)
+* [App iOS](https://github.com/LucasGinard/AireLibre-iOS) Disponible en la -> [AppStore](https://apps.apple.com/us/app/airelibre-calidad-del-aire/id6446297783)
 
 ## FAQ
 
