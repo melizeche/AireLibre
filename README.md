@@ -39,8 +39,8 @@ Básicamente un sensor que se comunique con Linka, nuestro backend.
 #### Materiales necesarios:
 * Sensor de calidad del aire Plantpower PMS7003 (asegurarse de que venga con la placa adaptadora) [Aliexpress](https://www.aliexpress.com/item/32784279004.html) [Ebay](https://www.ebay.com/itm/High-Precision-Laser-Dust-Sensor-Module-PM2-5-PM10-for-PMS7003-Cable-for-Arduino/303452433279) [Amazon](https://www.amazon.com/DSLE-Digital-PLANTOWER-PMS7003-Adapter/dp/B08M2F4B9R)
 * Placa ESP8266, nosotros usamos la Wemos D1 mini [Aliexpress](https://www.aliexpress.com/item/32787418018.html) [Ebay](https://www.ebay.com/itm/D1-Mini-NodeMcu-4M-bytes-Lua-WIFI-Development-Board-ESP8266-by-WeMos/224207727199)
-* Caja plástica exterior 100x100mm [Luminotecnia](https://www.luminotecnia.com.py/producto/1265/Caja-Exterior-Plastica-de-Conexion-100x100)
-* Prensacables (opcional) [Luminotecnia](https://www.luminotecnia.com.py/producto/2612/Prensacable-PG-11)
+* Caja plástica exterior 100x100mm [Luminotecnia](https://www.luminotecnia.com.py/producto/975/caja-exterior-plastica-de-conexion-100x100)
+* Prensacables (opcional) [Luminotecnia](https://www.luminotecnia.com.py/producto/3720/prensacable-pg-11)
 * Cable micro USB
 * Cargador USB
 
