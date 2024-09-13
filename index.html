@@ -155,10 +155,13 @@
         <div class="onoffswitch">
           <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" onchange="changeSwitch()" checked>
           <label class="onoffswitch-label" for="myonoffswitch">
-          <div class="onoffswitch-inner"></div>
-          <div class="onoffswitch-switch"></div>
+              <div class="onoffswitch-inner"></div>
+              <div class="onoffswitch-switch">
+                <img src="../ico/sun-icon.svg" class="icon sun-icon" alt="Sun Icon" />
+                <img src="../ico/moon-icon.svg" class="icon moon-icon" alt="Moon Icon" style="display: none;" />
+              </div>
           </label>
-          </div>
+        </div>
       </header>
       <div id="map" class="map"></div>
     </section>
@@ -248,17 +251,10 @@
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
   }).addTo(map);
-  let flag =  JSON.parse(localStorage.getItem('darkTheme')) || {isDarkTheme:false};
-  if(flag && flag.isDarkTheme){
-    document.getElementById("myonoffswitch").checked = false;
-    onDarkMode()
-  }else{
-    onLightMode()
-    document.getElementById("myonoffswitch").checked = true;
-  }
+  
   function changeSwitch() {
     var checked = document.getElementById("myonoffswitch").checked;
-     if(!checked){
+      if(!checked){
       onDarkMode();
     }else{
       onLightMode();
@@ -273,6 +269,13 @@
     })
   }
   function onDarkMode(){
+    // al cargar la pagina se setea el icono de luna
+    const sunIcon = document.querySelector('.sun-icon');
+    const moonIcon = document.querySelector('.moon-icon');
+
+    sunIcon.style.display = 'none';
+    moonIcon.style.display = 'block';
+
     document.getElementsByClassName('leaflet-pane leaflet-tile-pane')[0].style.cssText +=';filter: invert(1) hue-rotate(180deg) grayscale(0.7);';;
     var bodyElement = document.body;
     bodyElement.classList ="beautiful dark-mode";
@@ -289,6 +292,13 @@
   }
 
   function onLightMode(){
+    //al cargar la pagina el icono de sol es el que se muestra
+    const sunIcon = document.querySelector('.sun-icon');
+    const moonIcon = document.querySelector('.moon-icon');
+
+    sunIcon.style.display = 'block';
+    moonIcon.style.display = 'none';
+
     document.getElementsByClassName('leaflet-pane leaflet-tile-pane')[0].removeAttribute('style');
     var bodyElement = document.body;
     bodyElement.classList ="beautiful light-mode"
@@ -303,6 +313,27 @@
       linksText[i].style.color = '#1a0dab';
     }
   }
+
+  let flag = JSON.parse(localStorage.getItem('darkTheme'));
+  if(flag && flag.isDarkTheme){
+    document.getElementById("myonoffswitch").checked = false;
+    onDarkMode()
+  }else if(flag && !flag.isDarkTheme){
+    onLightMode();
+    document.getElementById("myonoffswitch").checked = true;
+  }else{
+    if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      onDarkMode();
+      changeSwitch();
+    }else{
+      onLightMode();
+      changeSwitch();
+    }
+  }
+  
+
+
+
 </script>
 
 </html>
