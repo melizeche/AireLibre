@@ -2,6 +2,7 @@ const ENDPOINT_AQI = "https://api.airelib.re/api/v1/aqi";
 const DEFAULT_CENTER = [-25.250, -57.536]
 const DEFAULT_ZOOM = 11
 
+// Mapping air quality categories to labels and CSS classes for styling
 const CAT_LABEL_STYLE = {
     'Good': { label: 'Libre', class: 'reading-info--is-good' },
     'Moderate': { label: 'Maso', class: 'reading-info--is-moderate' },
@@ -40,14 +41,15 @@ function requestGeoData() {
 const loadMarkers = (map, data) => L.geoJSON(data, {
     onEachFeature: (feature, layer) => {
         const { class: className, label } = CAT_LABEL_STYLE[feature.properties.quality.category];
-        layer
-            .bindTooltip(`<h1>${feature.properties.description}</h1>${label}`, {
+        // Bind a tooltip to each marker with a description and label
+        layer.bindTooltip(`<h1>${feature.properties.description}</h1>${label}`, {
                 noHide: true,
                 // permanent: true, 
                 className,
             });
 
     }, // onEachFeature ...
+    // Customize how each point feature is rendered as a marker
     pointToLayer: (feature, latlng) => {
         const { class: className } = CAT_LABEL_STYLE[feature.properties.quality.category];
         return new L.Marker(latlng, {
@@ -59,4 +61,4 @@ const loadMarkers = (map, data) => L.geoJSON(data, {
             }) // new L.divIcon ...
         }) // new L.Marker ...
     }, // pointToLayer ...
-}).addTo(map);
+}).addTo(map); // Add the GeoJSON layer to the map
