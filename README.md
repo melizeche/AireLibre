@@ -54,6 +54,7 @@ Básicamente un sensor que se comunique con Linka, nuestro backend.
 #### Guía de armado
 * [Guía rápida](docs/GuiaRapida.pdf)
 * [Presentación del Taller de Armado](docs/Presentacion-TallerSensoresCalidadDelAire.pdf)
+* [Flashear el firmware a la última versión](https://github.com/garyservin/linka-firmware/tree/master?tab=readme-ov-file#i-want-to-flash-my-board-with-the-latest-firmware)
 
 ### ¿Por qué tantos proyectos diferentes?
 
