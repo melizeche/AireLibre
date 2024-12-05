@@ -78,6 +78,16 @@ No, en Luque.
 ¿Nunca viste Capitán Planeta? Linka era la planetaria del viento.
 ![](https://captainplanetfoundation.org/wp-content/uploads/Linka-1.png)
 
+## Contribuir
+
+Si es un feature nuevo antes de contribuir preguntá en los issues si tu funcionalidad es necesitada por el proyecto
+
+1. Forkeá el proyecto!
+2. Creá tu feature branch: `git checkout -b my-new-feature`
+3. Commiteá tus cambios: `git commit -am 'Add some feature'`
+4. Pusheá a tu branch: `git push origin my-new-feature`
+5. Enviá un pull request al branch `main`
+   
 ## Licencia
 
 [GNU Affero General Public License](LICENSE)
