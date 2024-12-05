@@ -49,9 +49,11 @@ Básicamente un sensor que se comunique con Linka, nuestro backend.
 * Estaño
 * Pinzas para corte
 * Destornilladores
+* (Opcional) [Soporte para soldar](docs/docs/Welding_Support.STL)
 
 #### Guía de armado
-TBA
+* [Guía rápida](docs/GuiaRapida.pdf)
+* [Presentación del Taller de Armado](docs/Presentacion-TallerSensoresCalidadDelAire.pdf)
 
 ### ¿Por qué tantos proyectos diferentes?
 
