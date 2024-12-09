@@ -1,4 +1,4 @@
-const ENDPOINT_AQI = "https://rald-dev.greenbeep.com/api/v1/aqi";
+const ENDPOINT_AQI = "https://api.airelib.re/api/v1/aqi";
 const DEFAULT_CENTER = [-25.250, -57.536]
 const DEFAULT_ZOOM = 11
 
