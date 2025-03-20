@@ -1,37 +1,37 @@
 .reading-info--is-good .leaflet-popup-content-wrapper,
 .reading-info--is-good .leaflet-popup-tip,
 .leaflet-tooltip.reading-info--is-good {
-  background-color: #A2DC61;
+  background-color: #a2dc61;
 }
 
 .reading-info--is-moderate .leaflet-popup-content-wrapper,
 .reading-info--is-moderate .leaflet-popup-tip,
 .leaflet-tooltip.reading-info--is-moderate {
-  background-color: #FBD651;
+  background-color: #fbd651;
 }
 
 .reading-info--is-sensitive .leaflet-popup-content-wrapper,
 .reading-info--is-sensitive .leaflet-popup-tip,
 .leaflet-tooltip.reading-info--is-sensitive {
-  background-color: #FD9A57;
+  background-color: #fd9a57;
 }
 
 .reading-info--is-unhealthy .leaflet-popup-content-wrapper,
 .reading-info--is-unhealthy .leaflet-popup-tip,
 .leaflet-tooltip.reading-info--is-unhealthy {
-  background-color: #FF6A6E;
+  background-color: #ff6a6e;
 }
 
 .reading-info--is-very-unhealthy .leaflet-popup-content-wrapper,
 .reading-info--is-very-unhealthy .leaflet-popup-tip,
 .leaflet-tooltip.reading-info--is-very-unhealthy {
-  background-color: #A97BBC;
+  background-color: #a97bbc;
 }
 
 .reading-info--is-dangerous .leaflet-popup-content-wrapper,
 .reading-info--is-dangerous .leaflet-popup-tip,
 .leaflet-tooltip.reading-info--is-dangerous {
-  background-color: #9B5974;
+  background-color: #9b5974;
 }
 
 .reading-info--is-good.leaflet-tooltip {
@@ -47,64 +47,64 @@
 }
 
 .reading-info--is-moderate.leaflet-tooltip {
-  border: #C39A04 solid 1px !important;
+  border: #c39a04 solid 1px !important;
 }
 
 .reading-info--is-moderate.leaflet-tooltip-left:before {
-  border-left-color: #C39A04 !important;
+  border-left-color: #c39a04 !important;
 }
 
 .reading-info--is-moderate.leaflet-tooltip-right:before {
-  border-right-color: #C39A04 !important;
+  border-right-color: #c39a04 !important;
 }
 
 .reading-info--is-sensitive.leaflet-tooltip {
-  border: #CB5202 solid 1px !important;
+  border: #cb5202 solid 1px !important;
 }
 
 .reading-info--is-sensitive.leaflet-tooltip-left:before {
-  border-left-color: #CB5202 !important;
+  border-left-color: #cb5202 !important;
 }
 
 .reading-info--is-sensitive.leaflet-tooltip-right:before {
-  border-right-color: #CB5202 !important;
+  border-right-color: #cb5202 !important;
 }
 
 .reading-info--is-unhealthy.leaflet-tooltip {
-  border: #D90007 solid 1px !important;
+  border: #d90007 solid 1px !important;
 }
 
 .reading-info--is-unhealthy.leaflet-tooltip-left:before {
-  border-left-color: #D90007 !important;
+  border-left-color: #d90007 !important;
 }
 
 .reading-info--is-unhealthy.leaflet-tooltip-right:before {
-  border-right-color: #D90007 !important;
+  border-right-color: #d90007 !important;
 }
 
 .reading-info--is-very-unhealthy.leaflet-tooltip {
-  border: #6A3F7C solid 1px !important;
+  border: #6a3f7c solid 1px !important;
 }
 
 .reading-info--is-very-unhealthy.leaflet-tooltip-left:before {
-  border-left-color: #6A3F7C !important;
+  border-left-color: #6a3f7c !important;
 }
 
 .reading-info--is-very-unhealthy.leaflet-tooltip-right:before {
-  border-right-color: #6A3F7C !important;
+  border-right-color: #6a3f7c !important;
 }
 
 .reading-info--is-dangerous.leaflet-tooltip {
-  background-color: #9B5974 !important;
-  border: #5D3646 solid 1px !important;
+  background-color: #9b5974 !important;
+  border: #5d3646 solid 1px !important;
 }
 
 .reading-info--is-dangerous.leaflet-tooltip-left:before {
-  border-left-color: #5D3646 !important;
+  border-left-color: #5d3646 !important;
 }
 
 .reading-info--is-dangerous.leaflet-tooltip-right:before {
-  border-right-color: #5D3646 !important;
+  border-right-color: #5d3646 !important;
 }
 
 .leaflet-tooltip h1 {
@@ -152,7 +152,7 @@
   width: 15px;
   height: 15px;
   border-radius: 50%;
-  background: #4CAF50;
+  background: #4caf50;
   cursor: pointer;
 }
 
@@ -160,7 +160,7 @@
   width: 15px;
   height: 15px;
   border-radius: 50%;
-  background: #4CAF50;
+  background: #4caf50;
   cursor: pointer;
 }
 
@@ -178,10 +178,14 @@
   animation: pulse 1.5s infinite;
 }
 
-
-
 @keyframes pulse {
-  0% { opacity: 0.5; }
-  50% { opacity: 1; }
-  100% { opacity: 0.5; }
+  0% {
+    opacity: 0.5;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.5;
+  }
 }
