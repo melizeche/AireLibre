@@ -1,224 +1,384 @@
 <!DOCTYPE html>
 <html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aire Libre</title>
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="stylesheet" href="./style/normalize.css" />
+    <link rel="stylesheet" href="./style/master.css" />
+    <link rel="stylesheet" href="./style/custom-map-marker-icon.css" />
+    <link rel="stylesheet" href="./index.css" />
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aire Libre</title>
-  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-  <link rel="stylesheet" href="./style/normalize.css">
-  <link rel="stylesheet" href="./style/master.css">
-  <link rel="stylesheet" href="./style/custom-map-marker-icon.css">
-  <link rel="stylesheet" href="./index.css">
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+      integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+      crossorigin=""
+    />
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-0EQ0STJ1E5"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-0EQ0STJ1E5");
+    </script>
+    <script
+      src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+      integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+      crossorigin=""
+    ></script>
+    <script src="./js/fetch.js"></script>
+  </head>
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
-    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
-    crossorigin="" />
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-0EQ0STJ1E5"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() {
-      dataLayer.push(arguments);
-    }
-    gtag('js', new Date());
-    gtag('config', 'G-0EQ0STJ1E5');
-  </script>
-  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-    integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-    crossorigin=""></script>
-  <script src="./js/fetch.js"></script>
-</head>
-
-<body>
-  <div class="wrapper">
-    <section class="container">
-      <header class="head">
-        <h1 class="anchor anchor__for-desktop">
-          <a class="tvTitleMap colorTheme" href="/">Aire|Libre</a>
-        </h1>
-        <h1 class="anchor anchor__for-mobile">
-          <a class="tvTitleMap colorTheme" href="/">A|L</a>
-        </h1>
-        <div class="onoffswitch">
-          <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" onchange="changeSwitch()" checked>
-          <label class="onoffswitch-label" for="myonoffswitch">
+  <body>
+    <div class="wrapper">
+      <section class="container">
+        <header class="head">
+          <h1 class="anchor anchor__for-desktop">
+            <a class="tvTitleMap colorTheme" href="/">Aire|Libre</a>
+          </h1>
+          <h1 class="anchor anchor__for-mobile">
+            <a class="tvTitleMap colorTheme" href="/">A|L</a>
+          </h1>
+          <div class="onoffswitch">
+            <input
+              type="checkbox"
+              name="onoffswitch"
+              class="onoffswitch-checkbox"
+              id="myonoffswitch"
+              onchange="changeSwitch()"
+              checked
+            />
+            <label class="onoffswitch-label" for="myonoffswitch">
               <div class="onoffswitch-inner"></div>
               <div class="onoffswitch-switch">
-                <img src="../ico/sun-icon.svg" class="icon sun-icon" alt="Sun Icon" />
-                <img src="../ico/moon-icon.svg" class="icon moon-icon" alt="Moon Icon" style="display: none;" />
+                <img
+                  src="../ico/sun-icon.svg"
+                  class="icon sun-icon"
+                  alt="Sun Icon"
+                />
+                <img
+                  src="../ico/moon-icon.svg"
+                  class="icon moon-icon"
+                  alt="Moon Icon"
+                  style="display: none"
+                />
               </div>
-          </label>
+            </label>
+          </div>
+        </header>
+        <div id="map" class="map"></div>
+        <div class="time-slider-container">
+          <div class="time-slider-label colorTheme">
+            Datos históricos: <span id="time-display">Última hora</span>
+          </div>
+          <input
+            type="range"
+            min="0"
+            max="6"
+            value="0"
+            class="time-slider"
+            id="time-slider"
+          />
+          <div class="time-slider-labels colorTheme">
+            <span>Ahora</span>
+            <span>6 horas atrás</span>
+          </div>
         </div>
-      </header>
-      <div id="map" class="map"></div>
-    </section>
-    <section class="info">
-      <section>
-        <h2 class="info__title colorTheme">¿Qué es AireLibre?</h2>
-
-        <p class="info__desc colorTheme">AireLibre es una respuesta de la comunidad a la necesidad de saber sobre la calidad del aire de manera libre, colaborativa y descentralizada.</p>
-        <h2 class="info__title colorTheme">¿Qué es AQI?</h2>
-        <p class="info__desc colorTheme">Es un índice utilizado por agencias ambientales para medir la calidad del aire, cuanto más
-          alto su valor, el nivel de contaminación es mayor.</p>
       </section>
+      <section class="info">
+        <section>
+          <h2 class="info__title colorTheme">¿Qué es AireLibre?</h2>
 
-      <section id="scale">
-        <span class="info__title colorTheme">Escala AQI</span>
-        <div class="reading-info reading-info--is-good">
-          <span class="reading-info__title">0-50 | Libre</span>
-          <p class="reading-info__desc">Escaso riesgo de contaminación atmosférica, calidad de aire satisfactoria.</p>
-        </div>
+          <p class="info__desc colorTheme">
+            AireLibre es una respuesta de la comunidad a la necesidad de saber
+            sobre la calidad del aire de manera libre, colaborativa y
+            descentralizada.
+          </p>
+          <h2 class="info__title colorTheme">¿Qué es AQI?</h2>
+          <p class="info__desc colorTheme">
+            Es un índice utilizado por agencias ambientales para medir la
+            calidad del aire, cuanto más alto su valor, el nivel de
+            contaminación es mayor.
+          </p>
+        </section>
 
-        <div class="reading-info reading-info--is-moderate">
-          <span class="reading-info__title">51-100 | Maso</span>
-          <p class="reading-info__desc">Calidad de aire aceptable, riesgo moderado para la salud de personas sensibles a
-            la contaminación ambiental.</p>
-        </div>
+        <section id="scale">
+          <span class="info__title colorTheme">Escala AQI</span>
+          <div class="reading-info reading-info--is-good">
+            <span class="reading-info__title">0-50 | Libre</span>
+            <p class="reading-info__desc">
+              Escaso riesgo de contaminación atmosférica, calidad de aire
+              satisfactoria.
+            </p>
+          </div>
 
-        <div class="reading-info reading-info--is-sensitive">
-          <span class="reading-info__title">101-150 | No tan bien</span>
-          <p class="reading-info__desc">Insalubre para personas sensibles.</p>
-        </div>
+          <div class="reading-info reading-info--is-moderate">
+            <span class="reading-info__title">51-100 | Maso</span>
+            <p class="reading-info__desc">
+              Calidad de aire aceptable, riesgo moderado para la salud de
+              personas sensibles a la contaminación ambiental.
+            </p>
+          </div>
 
-        <div class="reading-info reading-info--is-unhealthy">
-          <span class="reading-info__title">151-200 | Insalubre</span>
-          <p class="reading-info__desc">Riesgo general para las personas, efectos más graves en personas sensibles.</p>
-        </div>
+          <div class="reading-info reading-info--is-sensitive">
+            <span class="reading-info__title">101-150 | No tan bien</span>
+            <p class="reading-info__desc">Insalubre para personas sensibles.</p>
+          </div>
 
-        <div class="reading-info reading-info--is-very-unhealthy">
-          <span class="reading-info__title">201-300 | Muy insalubre</span>
-          <p class="reading-info__desc">Condición de emergencia.</p>
-        </div>
+          <div class="reading-info reading-info--is-unhealthy">
+            <span class="reading-info__title">151-200 | Insalubre</span>
+            <p class="reading-info__desc">
+              Riesgo general para las personas, efectos más graves en personas
+              sensibles.
+            </p>
+          </div>
 
-        <div class="reading-info reading-info--is-dangerous">
-          <span class="reading-info__title">300+ | Peligroso</span>
-          <p class="reading-info__desc">Alerta sanitaria, efectos graves para toda la población.</p>
-        </div>
-        <p class="colorTheme">Fuente de la escala: <a class="link" href="https://www.airnow.gov/aqi/aqi-basics-in-spanish/" target="_blank">AirNow</a></p>
+          <div class="reading-info reading-info--is-very-unhealthy">
+            <span class="reading-info__title">201-300 | Muy insalubre</span>
+            <p class="reading-info__desc">Condición de emergencia.</p>
+          </div>
+
+          <div class="reading-info reading-info--is-dangerous">
+            <span class="reading-info__title">300+ | Peligroso</span>
+            <p class="reading-info__desc">
+              Alerta sanitaria, efectos graves para toda la población.
+            </p>
+          </div>
+          <p class="colorTheme">
+            Fuente de la escala:
+            <a
+              class="link"
+              href="https://www.airnow.gov/aqi/aqi-basics-in-spanish/"
+              target="_blank"
+              >AirNow</a
+            >
+          </p>
+        </section>
+        <div class="separator"></div>
+        <section>
+          <h3 class="info__subtitle colorTheme">
+            ¿Querés saber más sobre el proyecto?
+          </h3>
+          <p class="content colorTheme">
+            Si querés colaborar, o aprender a <b>construir tu propio sensor</b>,
+            o saber en que se diferencia con otros proyectos similares o
+            <a
+              class="color:inherit; link"
+              href="https://github.com/melizeche/AireLibre/#los-sensores-son-calibrados-en-suiza"
+              target="_blank"
+              >¿donde se calibran nuestos sensores</a
+            >? Entrá
+            <a
+              class="link"
+              href="https://github.com/melizeche/AireLibre/#faq"
+              target="_blank"
+              >acá para más info.</a
+            >
+          </p>
+          <p class="content colorTheme">
+            Bots:
+            <a
+              class="link"
+              rel="me"
+              href="https://bsky.app/profile/airelib.re/"
+              target="_blank"
+              >Bluesky</a
+            >
+            <a
+              class="link"
+              rel="me"
+              href="https://terere.social/@AireLibre"
+              target="_blank"
+              >Mastodon</a
+            >
+            <a
+              class="link"
+              rel="me"
+              href="https://x.com/koandeaire"
+              target="_blank"
+              >Twitter</a
+            >
+          </p>
+        </section>
+        <div class="separator"></div>
+
+        <footer class="content is-small">
+          <p class="is-small colorTheme">
+            AireLibre es un proyecto libre y de código abierto bajo licencia
+            AGPLv3.<br />Sugerencias, bugs o lo que sea lo encontras en el
+            <a
+              class="link"
+              href="https://github.com/melizeche/AireLibre"
+              target="_blank"
+              >repo</a
+            >
+          </p>
+        </footer>
       </section>
-      <div class="separator"></div>
-      <section>
-        <h3 class="info__subtitle colorTheme">¿Querés saber más sobre el proyecto?</h3>
-        <p class="content colorTheme">Si querés colaborar, o aprender a <b>construir tu propio sensor</b>, o saber en que se diferencia con otros proyectos similares o 
-            <a class="color:inherit; link" href="https://github.com/melizeche/AireLibre/#los-sensores-son-calibrados-en-suiza" target="_blank">¿donde se calibran nuestos sensores</a>? Entrá <a class="link" href="https://github.com/melizeche/AireLibre/#faq" target="_blank">acá para más info.</a></p>
-        <p class="content colorTheme">Bots: <a class="link" rel="me" href="https://bsky.app/profile/airelib.re/" target="_blank">Bluesky</a> <a class="link" rel="me" href="https://terere.social/@AireLibre" target="_blank">Mastodon</a> <a class="link" rel="me" href="https://x.com/koandeaire" target="_blank">Twitter</a></p>
-      </section>
-      <div class="separator"></div>
+    </div>
+  </body>
+  <script>
+    WebFontConfig = {
+      google: { families: ["Rubik:400,700,900:latin"] },
+    };
+    (function () {
+      setTimeout(function () {
+        document.getElementsByTagName("body")[0].classList.add("beautiful");
+      }, 1000);
+      var wf = document.createElement("script");
+      wf.src =
+        ("https:" == document.location.protocol ? "https" : "http") +
+        "://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js";
+      wf.type = "text/javascript";
+      wf.async = "true";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(wf, s);
+    })();
+  </script>
+  <script>
+    var map = L.map("map").setView(DEFAULT_CENTER, DEFAULT_ZOOM);
+    let darkMode = {
+      isDarkTheme: false,
+    };
 
-      <footer class="content is-small">
-        <p class="is-small colorTheme">AireLibre es un proyecto libre y de código abierto bajo licencia AGPLv3.<br>Sugerencias, bugs o lo que sea lo encontras en el <a
-          class="link" href="https://github.com/melizeche/AireLibre" target="_blank">repo</a></p>
-      </footer>
-    </section>
-  </div>
-</body>
-<script>
-  WebFontConfig = {
-    google: { families: ['Rubik:400,700,900:latin'] }
-  };
-  (function () {
-    setTimeout(function () {
-      document.getElementsByTagName('body')[0].classList.add('beautiful');
-    }, 1000);
-    var wf = document.createElement('script');
-    wf.src = ('https:' == document.location.protocol ? 'https' : 'http') +
-      '://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js';
-    wf.type = 'text/javascript';
-    wf.async = 'true';
-    var s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(wf, s);
-  })();
-</script>
-<script>
-  var map = L.map('map').setView(DEFAULT_CENTER, DEFAULT_ZOOM);
-  let darkMode = {
-    isDarkTheme: false
-  };
-  
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-  }).addTo(map);
-  
-  function changeSwitch() {
-    var checked = document.getElementById("myonoffswitch").checked;
-      if(!checked){
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo(map);
+
+    function changeSwitch() {
+      var checked = document.getElementById("myonoffswitch").checked;
+      if (!checked) {
+        onDarkMode();
+      } else {
+        onLightMode();
+      }
+    }
+    // Initialize map with current data
+    requestGeoData(0);
+
+    // Setup time slider functionality
+    const timeSlider = document.getElementById("time-slider");
+    const timeDisplay = document.getElementById("time-display");
+
+    timeSlider.addEventListener("input", function () {
+      const hoursAgo = parseInt(this.value);
+      updateTimeDisplay(hoursAgo);
+    });
+
+    timeSlider.addEventListener("change", function () {
+      const hoursAgo = parseInt(this.value);
+      requestGeoData(hoursAgo);
+    });
+
+    function updateTimeDisplay(hoursAgo) {
+      const currentDate = new Date();
+      let endTime;
+
+      if (hoursAgo === 0) {
+        endTime = currentDate;
+        timeDisplay.textContent = `Última hora (${formatTime(endTime)})`;
+      } else {
+        endTime = new Date(currentDate.getTime() - hoursAgo * 60 * 60000);
+        timeDisplay.textContent = `Hace ${hoursAgo} hora${
+          hoursAgo > 1 ? "s" : ""
+        } (${formatTime(endTime)})`;
+      }
+    }
+
+    function formatTime(date) {
+      return date.toLocaleTimeString("es-ES", {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+    }
+
+    if (window.navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function (position) {
+        var pos = [position.coords.latitude, position.coords.longitude];
+        map.setView(pos, DEFAULT_ZOOM);
+      });
+    }
+    function onDarkMode() {
+      // al cargar la pagina se setea el icono de luna
+      const sunIcon = document.querySelector(".sun-icon");
+      const moonIcon = document.querySelector(".moon-icon");
+
+      sunIcon.style.display = "none";
+      moonIcon.style.display = "block";
+
+      document.getElementsByClassName(
+        "leaflet-pane leaflet-tile-pane"
+      )[0].style.cssText +=
+        ";filter: invert(1) hue-rotate(180deg) grayscale(0.7);";
+      var bodyElement = document.body;
+      bodyElement.classList = "beautiful dark-mode";
+      var titlesElements = document.getElementsByClassName("colorTheme");
+      for (i = 0; i < titlesElements.length; i++) {
+        titlesElements[i].style.color = "white";
+      }
+      darkMode.isDarkTheme = true;
+      localStorage.setItem("darkTheme", JSON.stringify(darkMode));
+      var linksText = document.getElementsByClassName("link");
+      for (i = 0; i < linksText.length; i++) {
+        linksText[i].style.color = "#8cb4ff";
+      }
+    }
+
+    function onLightMode() {
+      //al cargar la pagina el icono de sol es el que se muestra
+      const sunIcon = document.querySelector(".sun-icon");
+      const moonIcon = document.querySelector(".moon-icon");
+
+      sunIcon.style.display = "block";
+      moonIcon.style.display = "none";
+
+      document
+        .getElementsByClassName("leaflet-pane leaflet-tile-pane")[0]
+        .removeAttribute("style");
+      var bodyElement = document.body;
+      bodyElement.classList = "beautiful light-mode";
+      darkMode.isDarkTheme = false;
+      localStorage.setItem("darkTheme", JSON.stringify(darkMode));
+      var titlesElements = document.getElementsByClassName("colorTheme");
+      for (i = 0; i < titlesElements.length; i++) {
+        titlesElements[i].style.color = "black";
+      }
+      var linksText = document.getElementsByClassName("link");
+      for (i = 0; i < linksText.length; i++) {
+        linksText[i].style.color = "#1a0dab";
+      }
+    }
+
+    let flag = JSON.parse(localStorage.getItem("darkTheme"));
+    if (flag && flag.isDarkTheme) {
+      document.getElementById("myonoffswitch").checked = false;
       onDarkMode();
-    }else{
+    } else if (flag && !flag.isDarkTheme) {
       onLightMode();
-     }
-  }
-  requestGeoData();
-
-  if (window.navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(function(position) {
-      var pos = [position.coords.latitude, position.coords.longitude];
-      map.setView(pos, DEFAULT_ZOOM);
-    })
-  }
-  function onDarkMode(){
-    // al cargar la pagina se setea el icono de luna
-    const sunIcon = document.querySelector('.sun-icon');
-    const moonIcon = document.querySelector('.moon-icon');
-
-    sunIcon.style.display = 'none';
-    moonIcon.style.display = 'block';
-
-    document.getElementsByClassName('leaflet-pane leaflet-tile-pane')[0].style.cssText +=';filter: invert(1) hue-rotate(180deg) grayscale(0.7);';;
-    var bodyElement = document.body;
-    bodyElement.classList ="beautiful dark-mode";
-    var titlesElements = document.getElementsByClassName('colorTheme');
-    for(i=0;i<titlesElements.length;i++){
-      titlesElements[i].style.color = 'white';
+      document.getElementById("myonoffswitch").checked = true;
+    } else {
+      if (
+        window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches
+      ) {
+        onDarkMode();
+        changeSwitch();
+      } else {
+        onLightMode();
+        changeSwitch();
+      }
     }
-    darkMode.isDarkTheme = true;
-    localStorage.setItem('darkTheme', JSON.stringify(darkMode));
-    var linksText = document.getElementsByClassName('link');
-    for(i=0;i<linksText.length;i++){
-      linksText[i].style.color = '#8cb4ff';
-    }
-  }
-
-  function onLightMode(){
-    //al cargar la pagina el icono de sol es el que se muestra
-    const sunIcon = document.querySelector('.sun-icon');
-    const moonIcon = document.querySelector('.moon-icon');
-
-    sunIcon.style.display = 'block';
-    moonIcon.style.display = 'none';
-
-    document.getElementsByClassName('leaflet-pane leaflet-tile-pane')[0].removeAttribute('style');
-    var bodyElement = document.body;
-    bodyElement.classList ="beautiful light-mode"
-    darkMode.isDarkTheme = false;
-    localStorage.setItem('darkTheme', JSON.stringify(darkMode));
-    var titlesElements = document.getElementsByClassName('colorTheme');
-    for(i=0;i<titlesElements.length;i++){
-      titlesElements[i].style.color = 'black';
-    }
-    var linksText = document.getElementsByClassName('link');
-    for(i=0;i<linksText.length;i++){
-      linksText[i].style.color = '#1a0dab';
-    }
-  }
-
-  let flag = JSON.parse(localStorage.getItem('darkTheme'));
-  if(flag && flag.isDarkTheme){
-    document.getElementById("myonoffswitch").checked = false;
-    onDarkMode()
-  }else if(flag && !flag.isDarkTheme){
-    onLightMode();
-    document.getElementById("myonoffswitch").checked = true;
-  }else{
-    if(window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      onDarkMode();
-      changeSwitch();
-    }else{
-      onLightMode();
-      changeSwitch();
-    }
-  }
-  
-</script>
-
+  </script>
 </html>
