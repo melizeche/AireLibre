@@ -25,18 +25,24 @@ const CAT_LABEL_STYLE = {
 };
 
 function requestGeoData(hoursAgo = 0) {
-  // Calculate time based on slider value (0 = current hour, 1-6 = hours ago)
+  // Calculate time based on slider value (0 = current hour, 1-MAX_HOURS_LOOKBACK = hours ago)
   const currentDate = new Date();
   let startTime, endTime;
+
+  // Round current time to the nearest hour
+  const roundedCurrentDate = new Date(currentDate);
+  roundedCurrentDate.setMinutes(0, 0, 0);
 
   if (hoursAgo === 0) {
     // For current hour (last 60 minutes)
     startTime = new Date(currentDate.getTime() - 60 * 60000);
     endTime = currentDate;
   } else {
-    // For historical data
-    startTime = new Date(currentDate.getTime() - (hoursAgo + 1) * 60 * 60000);
-    endTime = new Date(currentDate.getTime() - hoursAgo * 60 * 60000);
+    // For historical data - use rounded hours
+    endTime = new Date(
+      roundedCurrentDate.getTime() - (hoursAgo - 1) * 60 * 60000
+    );
+    startTime = new Date(endTime.getTime() - 60 * 60000);
   }
 
   const startUtcDate = startTime.toISOString();
@@ -55,7 +61,7 @@ function requestGeoData(hoursAgo = 0) {
 
   // If we have cached data, use it
   if (dataCache[cacheKey]) {
-    console.log(`Using cached data for ${hoursAgo} hours ago`);
+    console.log(`Using cached data for ${formatHourOnly(endTime)}`);
 
     // Remove loading indicator
     const loadingIndicator = document.querySelector(".loading-indicator");
@@ -69,14 +75,14 @@ function requestGeoData(hoursAgo = 0) {
   }
 
   // If no cache hit, make the API request
-  console.log(`Requesting data for ${hoursAgo} hours ago`);
+  console.log(`Requesting data for ${formatHourOnly(endTime)}`);
 
   const searchUrl =
     ENDPOINT_AQI + "?start=" + startUtcDate + "&end=" + endUtcDate;
   fetch(searchUrl)
     .then((response) => response.json())
     .then((data) => {
-      console.log(`Received data for ${hoursAgo} hours ago`);
+      console.log(`Received data for ${formatHourOnly(endTime)}`);
 
       // Remove loading indicator
       const loadingIndicator = document.querySelector(".loading-indicator");
@@ -102,6 +108,13 @@ function requestGeoData(hoursAgo = 0) {
 } // requestGeoData ....
 
 // Function to display data on the map
+// Format time to display only the hour in 24-hour format with :00 minutes
+function formatHourOnly(date) {
+  return date
+    .toLocaleTimeString("es-ES", { hour: "2-digit", minute: "2-digit" })
+    .replace(/:\d\d$/, ":00");
+}
+
 function displayData(map, data) {
   // Clear existing markers if they exist
   if (markersLayer) {
