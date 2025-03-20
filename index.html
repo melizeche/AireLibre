@@ -52,6 +52,14 @@
         </div>
       </header>
       <div id="map" class="map"></div>
+      <div class="time-slider-container">
+        <div class="time-slider-label colorTheme">Datos históricos: <span id="time-display">Última hora</span></div>
+        <input type="range" min="0" max="6" value="0" class="time-slider" id="time-slider">
+        <div class="time-slider-labels colorTheme">
+          <span>Ahora</span>
+          <span>6 horas atrás</span>
+        </div>
+      </div>
     </section>
     <section class="info">
       <section>
@@ -148,7 +156,41 @@
       onLightMode();
      }
   }
-  requestGeoData();
+  // Initialize map with current data
+  requestGeoData(0);
+  
+  // Setup time slider functionality
+  const timeSlider = document.getElementById('time-slider');
+  const timeDisplay = document.getElementById('time-display');
+  
+  timeSlider.addEventListener('input', function() {
+    const hoursAgo = parseInt(this.value);
+    updateTimeDisplay(hoursAgo);
+  });
+  
+  timeSlider.addEventListener('change', function() {
+    const hoursAgo = parseInt(this.value);
+    requestGeoData(hoursAgo);
+  });
+  
+  function updateTimeDisplay(hoursAgo) {
+    const currentDate = new Date();
+    let endTime;
+    
+    if (hoursAgo === 0) {
+      endTime = currentDate;
+      timeDisplay.textContent = `Última hora (${formatTime(endTime)})`;
+    } else {
+      endTime = new Date(currentDate.getTime() - hoursAgo * 60 * 60000);
+      timeDisplay.textContent = `Hace ${hoursAgo} hora${hoursAgo > 1 ? 's' : ''} (${formatTime(endTime)})`;
+    }
+  }
+  
+
+  
+  function formatTime(date) {
+    return date.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+  }
 
   if (window.navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(function(position) {
