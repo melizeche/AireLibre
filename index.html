@@ -80,7 +80,7 @@
         <div id="map" class="map"></div>
         <div class="time-slider-container">
           <div class="time-slider-label colorTheme">
-            Datos históricos: <span id="time-display">Última hora</span>
+            Datos históricos: <span id="time-display"></span>
           </div>
           <input
             type="range"
@@ -91,9 +91,42 @@
             id="time-slider"
           />
           <div class="time-slider-labels colorTheme">
-            <span>Ahora</span>
-            <span>6 horas atrás</span>
+            <span id="current-hour"></span>
+            <span id="earliest-hour"></span>
           </div>
+          <script>
+            // Calculate and display the current hour
+            function updateCurrentHour() {
+              const currentDate = new Date();
+              document.getElementById("current-hour").textContent =
+                currentDate.toLocaleTimeString("es-ES", {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                });
+            }
+            updateCurrentHour();
+            // Update current time every minute
+            //setInterval(updateCurrentHour, 60000);
+          </script>
+          <script>
+            // Calculate and display the earliest available hour (6 hours ago)
+            function updateEarliestHour() {
+              const currentDate = new Date();
+              const roundedCurrentDate = new Date(currentDate);
+              roundedCurrentDate.setMinutes(0, 0, 0);
+              const earliestTime = new Date(
+                roundedCurrentDate.getTime() - 5 * 60 * 60000
+              );
+              document.getElementById("earliest-hour").textContent =
+                earliestTime
+                  .toLocaleTimeString("es-ES", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })
+                  .replace(/:\d\d$/, ":00");
+            }
+            updateEarliestHour();
+          </script>
         </div>
       </section>
       <section class="info">
@@ -286,14 +319,20 @@
       const currentDate = new Date();
       let endTime;
 
+      // Round current time to the nearest hour
+      const roundedCurrentDate = new Date(currentDate);
+      roundedCurrentDate.setMinutes(0, 0, 0);
+
       if (hoursAgo === 0) {
+        // For current time, show the actual time
         endTime = currentDate;
-        timeDisplay.textContent = `Última hora (${formatTime(endTime)})`;
+        timeDisplay.textContent = formatTime(endTime);
       } else {
-        endTime = new Date(currentDate.getTime() - hoursAgo * 60 * 60000);
-        timeDisplay.textContent = `Hace ${hoursAgo} hora${
-          hoursAgo > 1 ? "s" : ""
-        } (${formatTime(endTime)})`;
+        // For historical data, show the rounded hour
+        endTime = new Date(
+          roundedCurrentDate.getTime() - (hoursAgo - 1) * 60 * 60000
+        );
+        timeDisplay.textContent = formatRoundedHour(endTime);
       }
     }
 
@@ -302,6 +341,15 @@
         hour: "2-digit",
         minute: "2-digit",
       });
+    }
+
+    function formatRoundedHour(date) {
+      return date
+        .toLocaleTimeString("es-ES", {
+          hour: "2-digit",
+          minute: "2-digit",
+        })
+        .replace(/:\d\d$/, ":00");
     }
 
     if (window.navigator.geolocation) {
