@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aire Libre</title>
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico" />
+    <link rel="stylesheet" href="./style/normalize.css" />
+    <link rel="stylesheet" href="./style/master.css" />
+    <link rel="stylesheet" href="./style/custom-map-marker-icon.css" />
+    <link rel="stylesheet" href="./index.css" />
+    
+    <!-- Custom map size styles -->
+    <style>
+      /* Reset all margins and paddings */
+      * {
+        box-sizing: border-box;
+      }
+      
+      html, body {
+        height: 100%;
+        width: 100%;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: hidden;
+      }
+      
+      /* Make the wrapper and container take full screen */
+      .wrapper, .container, section.container {
+        width: 100% !important;
+        height: 100% !important;
+        position: relative !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        max-width: none !important; /* Override Bulma container max-width */
+      }
+      
+      /* Override map size to make it fullscreen */
+      #map, .map {
+        height: 100vh !important; /* Force full viewport height */
+        width: 100vw !important;  /* Force full viewport width */
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        z-index: 0 !important; /* Keep map behind other elements */
+      }
+      
+      /* Make header float on top of map */
+      .head {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        z-index: 1000;
+        background-color: transparent;
+        padding: 10px;
+        border-radius: 5px;
+        margin: 0;
+      }
+      
+      .dark-mode .head {
+        background-color: transparent;
+      }
+      
+      /* Position time controls */
+      .time-toggle-button {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 1000;
+      }
+      
+      .time-slider-container {
+        position: absolute;
+        bottom: 60px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 999;
+        background-color: rgba(255, 255, 255, 0.8);
+        padding: 10px 15px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        width: 300px;
+        text-align: center;
+      }
+      
+      .dark-mode .time-slider-container {
+        background-color: rgba(51, 51, 51, 0.8);
+      }
+    </style>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+      integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+      crossorigin=""
+    />
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-0EQ0STJ1E5"
+    ></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-0EQ0STJ1E5");
+    </script>
+    <script
+      src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+      integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+      crossorigin=""
+    ></script>
+    <script src="./js/fetch.js"></script>
+  </head>
+
+  <body>
+    <div class="wrapper">
+      <section class="container">
+        <header class="head">
+          <h1 class="anchor anchor__for-desktop">
+            <a class="tvTitleMap colorTheme" href="/">Aire|Libre</a>
+          </h1>
+          <h1 class="anchor anchor__for-mobile">
+            <a class="tvTitleMap colorTheme" href="/">A|L</a>
+          </h1>
+          <div class="onoffswitch">
+            <input
+              type="checkbox"
+              name="onoffswitch"
+              class="onoffswitch-checkbox"
+              id="myonoffswitch"
+              onchange="changeSwitch()"
+              checked
+            />
+            <label class="onoffswitch-label" for="myonoffswitch">
+              <div class="onoffswitch-inner"></div>
+              <div class="onoffswitch-switch">
+                <img
+                  src="../ico/sun-icon.svg"
+                  class="icon sun-icon"
+                  alt="Sun Icon"
+                />
+                <img
+                  src="../ico/moon-icon.svg"
+                  class="icon moon-icon"
+                  alt="Moon Icon"
+                  style="display: none"
+                />
+              </div>
+            </label>
+          </div>
+        </header>
+        <div id="map" class="map"></div>
+        <button id="time-toggle-button" class="time-toggle-button">
+          Mostrar datos históricos
+        </button>
+        <div class="time-slider-container">
+          <div class="time-slider-label colorTheme">
+            Datos históricos: <span id="time-display"></span>
+          </div>
+          <!-- Input with default max value that will be overridden by JavaScript -->
+          <input
+            type="range"
+            min="0"
+            max="6"
+            value="0"
+            class="time-slider"
+            id="time-slider"
+          />
+          <!-- Slider max will be set by JavaScript after the page loads -->
+          <div class="time-slider-labels colorTheme">
+            <span id="current-hour"></span>
+            <span id="earliest-hour"></span>
+          </div>
+          <script>
+            // Calculate and display the current hour
+            // Function declaration for updateCurrentHour (will be called later)
+            function updateCurrentHour() {
+              const currentDate = new Date();
+              document.getElementById("current-hour").textContent =
+                currentDate.toLocaleTimeString("es-ES", {
+                  hour: "2-digit",
+                  minute: "2-digit",
+                });
+            }
+            // Update current time every minute
+            //setInterval(updateCurrentHour, 60000);
+          </script>
+          <script>
+            // Calculate and display the earliest available hour (6 hours ago)
+            // Function declaration for updateEarliestHour (will be called later)
+            function updateEarliestHour() {
+              const currentDate = new Date();
+              const roundedCurrentDate = new Date(currentDate);
+              roundedCurrentDate.setMinutes(0, 0, 0);
+              const earliestTime = new Date(
+                roundedCurrentDate.getTime() -
+                  (MAX_HOURS_LOOKBACK - 1) * 60 * 60000
+              );
+              document.getElementById("earliest-hour").textContent =
+                earliestTime
+                  .toLocaleTimeString("es-ES", {
+                    hour: "2-digit",
+                    minute: "2-digit",
+                  })
+                  .replace(/:\d\d$/, ":00");
+            }
+          </script>
+        </div>
+      </section>
+    </div>
+  </body>
+  <script>
+    // Global configuration
+    const MAX_HOURS_LOOKBACK = 24;
+
+    WebFontConfig = {
+      google: { families: ["Rubik:400,700,900:latin"] },
+    };
+    (function () {
+      setTimeout(function () {
+        document.getElementsByTagName("body")[0].classList.add("beautiful");
+      }, 1000);
+      var wf = document.createElement("script");
+      wf.src =
+        ("https:" == document.location.protocol ? "https" : "http") +
+        "://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js";
+      wf.type = "text/javascript";
+      wf.async = "true";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(wf, s);
+    })();
+  </script>
+  <script>
+    var map = L.map("map").setView(DEFAULT_CENTER, DEFAULT_ZOOM);
+    let darkMode = {
+      isDarkTheme: false,
+    };
+
+    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+      attribution:
+        '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    }).addTo(map);
+
+    function changeSwitch() {
+      var checked = document.getElementById("myonoffswitch").checked;
+      if (!checked) {
+        onDarkMode();
+      } else {
+        onLightMode();
+      }
+    }
+    // Initialize map with current data
+    requestGeoData(0);
+
+    // Setup time slider functionality
+    const timeSlider = document.getElementById("time-slider");
+    const timeDisplay = document.getElementById("time-display");
+    const timeToggleButton = document.getElementById("time-toggle-button");
+    const timeSliderContainer = document.querySelector(
+      ".time-slider-container"
+    );
+
+    // Set the max attribute using the global constant
+    timeSlider.setAttribute("max", MAX_HOURS_LOOKBACK);
+
+    // Update the earliest hour display
+    timeSlider.value = 0;
+    updateEarliestHour();
+    // Update the current hour display
+    updateCurrentHour();
+
+    // Toggle time slider visibility
+    timeToggleButton.addEventListener("click", function () {
+      // Check computed style instead of inline style
+      const computedStyle = window.getComputedStyle(timeSliderContainer);
+
+      if (computedStyle.display !== "none") {
+        timeSliderContainer.style.display = "none";
+        timeToggleButton.textContent = "Mostrar datos históricos";
+        // Reset to current time when hiding
+        timeSlider.value = 0;
+        requestGeoData(0);
+      } else {
+        timeSliderContainer.style.display = "block";
+        timeToggleButton.textContent = "Ocultar datos históricos";
+      }
+    });
+
+    timeSlider.addEventListener("input", function () {
+      const hoursAgo = parseInt(this.value);
+      updateTimeDisplay(hoursAgo);
+    });
+
+    timeSlider.addEventListener("change", function () {
+      const hoursAgo = parseInt(this.value);
+      requestGeoData(hoursAgo);
+    });
+
+    function updateTimeDisplay(hoursAgo) {
+      const currentDate = new Date();
+      let endTime;
+
+      // Round current time to the nearest hour
+      const roundedCurrentDate = new Date(currentDate);
+      roundedCurrentDate.setMinutes(0, 0, 0);
+
+      if (hoursAgo === 0) {
+        // For current time, show the actual time
+        endTime = currentDate;
+        timeDisplay.textContent = formatTime(endTime);
+      } else {
+        // For historical data, show the rounded hour
+        endTime = new Date(
+          roundedCurrentDate.getTime() - (hoursAgo - 1) * 60 * 60000
+        );
+        timeDisplay.textContent = formatRoundedHour(endTime);
+      }
+    }
+
+    function formatTime(date) {
+      return date.toLocaleTimeString("es-ES", {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+    }
+
+    function formatRoundedHour(date) {
+      return date
+        .toLocaleTimeString("es-ES", {
+          hour: "2-digit",
+          minute: "2-digit",
+        })
+        .replace(/:\d\d$/, ":00");
+    }
+
+    if (window.navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(function (position) {
+        var pos = [position.coords.latitude, position.coords.longitude];
+        map.setView(pos, DEFAULT_ZOOM);
+      });
+    }
+    function onDarkMode() {
+      // al cargar la pagina se setea el icono de luna
+      const sunIcon = document.querySelector(".sun-icon");
+      const moonIcon = document.querySelector(".moon-icon");
+
+      sunIcon.style.display = "none";
+      moonIcon.style.display = "block";
+
+      document.getElementsByClassName(
+        "leaflet-pane leaflet-tile-pane"
+      )[0].style.cssText +=
+        ";filter: invert(1) hue-rotate(180deg) grayscale(0.7);";
+      var bodyElement = document.body;
+      bodyElement.classList = "beautiful dark-mode";
+      var titlesElements = document.getElementsByClassName("colorTheme");
+      for (i = 0; i < titlesElements.length; i++) {
+        titlesElements[i].style.color = "white";
+      }
+      darkMode.isDarkTheme = true;
+      localStorage.setItem("darkTheme", JSON.stringify(darkMode));
+      var linksText = document.getElementsByClassName("link");
+      for (i = 0; i < linksText.length; i++) {
+        linksText[i].style.color = "#8cb4ff";
+      }
+    }
+
+    function onLightMode() {
+      //al cargar la pagina el icono de sol es el que se muestra
+      const sunIcon = document.querySelector(".sun-icon");
+      const moonIcon = document.querySelector(".moon-icon");
+
+      sunIcon.style.display = "block";
+      moonIcon.style.display = "none";
+
+      document
+        .getElementsByClassName("leaflet-pane leaflet-tile-pane")[0]
+        .removeAttribute("style");
+      var bodyElement = document.body;
+      bodyElement.classList = "beautiful light-mode";
+      darkMode.isDarkTheme = false;
+      localStorage.setItem("darkTheme", JSON.stringify(darkMode));
+      var titlesElements = document.getElementsByClassName("colorTheme");
+      for (i = 0; i < titlesElements.length; i++) {
+        titlesElements[i].style.color = "black";
+      }
+      var linksText = document.getElementsByClassName("link");
+      for (i = 0; i < linksText.length; i++) {
+        linksText[i].style.color = "#1a0dab";
+      }
+    }
+
+    let flag = JSON.parse(localStorage.getItem("darkTheme"));
+    if (flag && flag.isDarkTheme) {
+      document.getElementById("myonoffswitch").checked = false;
+      onDarkMode();
+    } else if (flag && !flag.isDarkTheme) {
+      onLightMode();
+      document.getElementById("myonoffswitch").checked = true;
+    } else {
+      if (
+        window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches
+      ) {
+        onDarkMode();
+        changeSwitch();
+      } else {
+        onLightMode();
+        changeSwitch();
+      }
+    }
+  </script>
+</html>
