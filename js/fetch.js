@@ -25,7 +25,7 @@ const CAT_LABEL_STYLE = {
 };
 
 function requestGeoData(hoursAgo = 0) {
-  // Calculate time based on slider value (0 = current hour, 1-6 = hours ago)
+  // Calculate time based on slider value (0 = current hour, 1-MAX_HOURS_LOOKBACK = hours ago)
   const currentDate = new Date();
   let startTime, endTime;
 

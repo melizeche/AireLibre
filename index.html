@@ -82,6 +82,7 @@
           <div class="time-slider-label colorTheme">
             Datos históricos: <span id="time-display"></span>
           </div>
+          <!-- Input with default max value that will be overridden by JavaScript -->
           <input
             type="range"
             min="0"
@@ -90,12 +91,14 @@
             class="time-slider"
             id="time-slider"
           />
+          <!-- Slider max will be set by JavaScript after the page loads -->
           <div class="time-slider-labels colorTheme">
             <span id="current-hour"></span>
             <span id="earliest-hour"></span>
           </div>
           <script>
             // Calculate and display the current hour
+            // Function declaration for updateCurrentHour (will be called later)
             function updateCurrentHour() {
               const currentDate = new Date();
               document.getElementById("current-hour").textContent =
@@ -104,18 +107,19 @@
                   minute: "2-digit",
                 });
             }
-            updateCurrentHour();
             // Update current time every minute
             //setInterval(updateCurrentHour, 60000);
           </script>
           <script>
             // Calculate and display the earliest available hour (6 hours ago)
+            // Function declaration for updateEarliestHour (will be called later)
             function updateEarliestHour() {
               const currentDate = new Date();
               const roundedCurrentDate = new Date(currentDate);
               roundedCurrentDate.setMinutes(0, 0, 0);
               const earliestTime = new Date(
-                roundedCurrentDate.getTime() - 5 * 60 * 60000
+                roundedCurrentDate.getTime() -
+                  (MAX_HOURS_LOOKBACK - 1) * 60 * 60000
               );
               document.getElementById("earliest-hour").textContent =
                 earliestTime
@@ -125,7 +129,6 @@
                   })
                   .replace(/:\d\d$/, ":00");
             }
-            updateEarliestHour();
           </script>
         </div>
       </section>
@@ -262,6 +265,9 @@
     </div>
   </body>
   <script>
+    // Global configuration
+    const MAX_HOURS_LOOKBACK = 6;
+
     WebFontConfig = {
       google: { families: ["Rubik:400,700,900:latin"] },
     };
@@ -304,6 +310,14 @@
     // Setup time slider functionality
     const timeSlider = document.getElementById("time-slider");
     const timeDisplay = document.getElementById("time-display");
+
+    // Set the max attribute using the global constant
+    timeSlider.setAttribute("max", MAX_HOURS_LOOKBACK);
+
+    // Update the earliest hour display
+    updateEarliestHour();
+    // Update the current hour display
+    updateCurrentHour();
 
     timeSlider.addEventListener("input", function () {
       const hoursAgo = parseInt(this.value);
