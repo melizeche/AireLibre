@@ -114,16 +114,17 @@
 /* Time Slider Styles */
 .time-slider-container {
   position: absolute;
-  bottom: 20px;
+  bottom: 60px; /* Moved up to make room for the toggle button */
   left: 50%;
   transform: translateX(-50%);
-  z-index: 1000;
+  z-index: 999; /* Lower than the toggle button */
   background-color: rgba(255, 255, 255, 0.8);
   padding: 10px 15px;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   width: 300px;
   text-align: center;
+  display: none; /* Hidden by default */
 }
 
 .dark-mode .time-slider-container {
@@ -176,6 +177,32 @@
   opacity: 0.8;
   font-size: 0.9em;
   animation: pulse 1.5s infinite;
+}
+
+.time-toggle-button {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1001; /* Higher than the slider container */
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 12px;
+  transition: background-color 0.3s;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.time-toggle-button:hover {
+  background-color: #3e8e41;
+}
+
+.dark-mode .time-toggle-button {
+  background-color: #2d8633;
+  color: #f0f0f0;
 }
 
 @keyframes pulse {
